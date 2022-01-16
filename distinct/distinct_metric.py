@@ -87,15 +87,15 @@ class Distinct(datasets.Metric):
             citation=_CITATION,
             inputs_description=_KWARGS_DESCRIPTION,
             # This defines the format of each prediction and reference
-            # features=datasets.Features({
-            #     'predictions': datasets.Value('string'),
-            #     'references': datasets.Value('string'),
-            # }),
-            # # Homepage of the metric for documentation
-            # homepage="http://metric.homepage",
-            # # Additional links to the codebase or references
-            # codebase_urls=["http://github.com/path/to/codebase/of/new_metric"],
-            # reference_urls=["http://path.to.reference.url/new_metric"]
+            features=datasets.Features({
+                'predictions': datasets.Value('string'),
+                'references': datasets.Value('string'),
+            }),
+            # Homepage of the metric for documentation
+            homepage="http://metric.homepage",
+            # Additional links to the codebase or references
+            codebase_urls=["http://github.com/path/to/codebase/of/new_metric"],
+            reference_urls=["http://path.to.reference.url/new_metric"]
         )
     #
     # def _download_and_prepare(self, dl_manager):
@@ -104,7 +104,7 @@ class Distinct(datasets.Metric):
     #     bad_words_path = dl_manager.download_and_extract(BAD_WORDS_URL)
     #     self.bad_words = set([w.strip() for w in open(bad_words_path, "r", encoding="utf-8")])
 
-    def _compute(self, predictions):
+    def _compute(self, predictions, references):
         """Returns the scores"""
         # TODO: Compute the different scores of the metric
         tokens = [0.0, 0.0]

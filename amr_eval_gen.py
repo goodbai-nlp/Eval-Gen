@@ -62,8 +62,8 @@ def raw_corpus_bleurt(hypotheses: Iterable[str], references: Iterable[str]):
 
 def raw_corpus_distinct(hypotheses: Iterable[str]):
     hypotheses = [itm.strip() for itm in hypotheses]
-    distinct = datasets.load_metric('./distinct')
-    res = distinct.compute(predictions=hypotheses)
+    distinct = datasets.load_metric('./distinct/distinct_metric.py')
+    res = distinct.compute(predictions=hypotheses, references=['' for _ in range(len(hypotheses))])
     return res
 
 def read_tokens(in_tokens_file):
@@ -78,14 +78,21 @@ if __name__ == "__main__":
     args = argument_parser()
 
     # read files
-    ref = read_tokens(args.in_reference_tokens)
+    # ref = read_tokens(args.in_reference_tokens)
     hyp = read_tokens(args.in_tokens)
 
-    # Lower case output
     if args.lower_case:
-        for i in range(len(ref)):
-            ref[i] = ref[i].lower()
+        for i in range(len(hyp)):
             hyp[i] = hyp[i].lower()
+
+    distinct = raw_corpus_distinct(hyp)
+    print("DISTINCT {}".format(distinct))
+
+    # Lower case output
+    # if args.lower_case:
+    #     for i in range(len(ref)):
+    #         ref[i] = ref[i].lower()
+    #         hyp[i] = hyp[i].lower()
 
     
     # for i in range(len(hyp)):
@@ -93,11 +100,11 @@ if __name__ == "__main__":
 
     # results
 
-    bleu = raw_corpus_bleu(hyp, ref)
-    print("BLEU {}".format(bleu))
-
-    chrFpp = raw_corpus_chrf(hyp, ref)
-    print("chrF++ {}".format(chrFpp))
+    # bleu = raw_corpus_bleu(hyp, ref)
+    # print("BLEU {}".format(bleu))
+    #
+    # chrFpp = raw_corpus_chrf(hyp, ref)
+    # print("chrF++ {}".format(chrFpp))
 
     #meteor = raw_corpus_meteor(hyp, ref)
     #print("meteor {}".format(meteor))

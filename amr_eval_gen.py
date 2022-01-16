@@ -44,6 +44,7 @@ def raw_corpus_chrf(hypotheses: Iterable[str], references: Iterable[str]) -> flo
 
 
 def raw_corpus_meteor(hypotheses: Iterable[str], references: Iterable[str]):
+    """Meteor v1.0, out-of-date, using java Meteor 1.5 instead!"""
     hypotheses = [itm.strip() for itm in hypotheses]
     references = [[itm.strip()] for itm in references]
     meteor = datasets.load_metric("meteor")
@@ -95,6 +96,6 @@ if __name__ == "__main__":
     #meteor = raw_corpus_meteor(hyp, ref)
     #print("meteor {}".format(meteor))
 
-    bleurt = raw_corpus_bleurt(hyp, ref)
-    b_res = sum(bleurt["scores"]) / len(bleurt["scores"])
-    print("bleurt {}".format(b_res))
+    #bleurt = raw_corpus_bleurt(hyp, ref)
+    #b_res = sum(bleurt["scores"]) / len(bleurt["scores"])
+    #print("bleurt {}".format(b_res))

@@ -60,6 +60,12 @@ def raw_corpus_bleurt(hypotheses: Iterable[str], references: Iterable[str]):
     return res
 
 
+def raw_corpus_distinct(hypotheses: Iterable[str]):
+    hypotheses = [itm.strip() for itm in hypotheses]
+    distinct = datasets.load_metric('./distinct')
+    res = distinct.compute(predictions=hypotheses)
+    return res
+
 def read_tokens(in_tokens_file):
     with open(in_tokens_file) as fid:
         lines = fid.readlines()
